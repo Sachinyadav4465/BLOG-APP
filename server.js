@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const colors = require('colors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 
 
@@ -19,6 +21,9 @@ const blogRoutes = require("./routes/blogRoutes");
 //mongo connection
 connectDB();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 //rest object
 
 const app=express()
@@ -27,12 +32,18 @@ const app=express()
 app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
+app.use(express.static(path.join(__dirname,'./client/build')))
 
 
 // routes
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/blog", blogRoutes);
+
+
+app.use('*', function (req, res) {
+  res.send(path.join(__dirname,'./client/build/index.html'))
+})
 
 //PORT
 
