@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const colors = require('colors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-import path from 'path'
-import { fileURLToPath } from 'url';
+const path = require('path');
+const { fileURLToPath } = require('url');
 
 
 
@@ -23,7 +23,6 @@ connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 //rest object
 
 const app=express()
